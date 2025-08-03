@@ -117,7 +117,7 @@ export default {
   },
   
   watch: {
-    // DeviceId değiştiğinde SignalR grubunu güncelle
+
     deviceId(newDeviceId, oldDeviceId) {
       if (oldDeviceId) {
         this.cleanupSignalR();
