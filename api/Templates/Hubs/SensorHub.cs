@@ -18,14 +18,14 @@ namespace minifab.api.Templates.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        // Belirli bir cihazın verilerini izlemek için gruba katılma
+       
         public async Task JoinDeviceGroup(string deviceId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, deviceId);
             Console.WriteLine($"İstemci {Context.ConnectionId}, cihaz grubuna katıldı: {deviceId}");
         }
 
-        // Cihaz grubundan ayrılma
+       
         public async Task LeaveDeviceGroup(string deviceId)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, deviceId);

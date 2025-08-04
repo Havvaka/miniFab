@@ -9,7 +9,7 @@ class SignalRService {
       onConnectionChange: () => {}
     };
     this.isConnected = false;
-    this.hubUrl = 'http://localhost:5297/sensorHub'; // API ile aynı port ve host
+    this.hubUrl = 'http://localhost:5297/sensorHub';
   }
 
   setCallbacks(callbacks) {
@@ -17,8 +17,7 @@ class SignalRService {
   }
 
   async startConnection() {
-    if (this.connection && this.isConnected) {
-      console.log('SignalR zaten bağlı, tekrar bağlanmaya gerek yok');
+    if (this.connection && this.isConnected) {  
       return true;
     }
 
@@ -32,42 +31,39 @@ class SignalRService {
 
       
       this.connection.on('ReceiveSensorData', (data) => {
-        console.log('ReceiveSensorData alındı:', data);
+
         this.callbacks.onReceiveSensorData(data);
       });
 
       this.connection.on('ReceiveDeviceSensorData', (data) => {
-        console.log('ReceiveDeviceSensorData alındı:', data);
         this.callbacks.onReceiveDeviceSensorData(data);
       });
 
-     
       this.connection.onreconnecting(() => {
-        console.log('SignalR yeniden bağlanıyor...');
         this.isConnected = false;
         this.callbacks.onConnectionChange(false);
       });
 
       this.connection.onreconnected(() => {
-        console.log('SignalR yeniden bağlandı');
+       
         this.isConnected = true;
         this.callbacks.onConnectionChange(true);
       });
 
       this.connection.onclose(() => {
-        console.log('SignalR bağlantısı kapandı');
+      
         this.isConnected = false;
         this.callbacks.onConnectionChange(false);
       });
 
       
       await this.connection.start();
-      console.log('SignalR bağlantısı başarıyla kuruldu');
+     
       this.isConnected = true;
       this.callbacks.onConnectionChange(true);
       return true;
     } catch (error) {
-      console.error('SignalR bağlantısı kurulamadı:', error);
+     
       this.isConnected = false;
       this.callbacks.onConnectionChange(false);
       return false;
@@ -78,9 +74,10 @@ class SignalRService {
     if (this.connection) {
       try {
         await this.connection.stop();
-        console.log('SignalR bağlantısı durduruldu');
+ 
       } catch (error) {
-        console.error('SignalR bağlantısı durdurulurken hata:', error);
+        // Bağlantı kapatma işlemi sırasında oluşabilecek hatalar görmezden gelinir
+        console.warn('Connection stop error:', error);
       } finally {
         this.connection = null;
         this.isConnected = false;
@@ -91,16 +88,16 @@ class SignalRService {
 
   async joinDeviceGroup(deviceId) {
     if (!this.connection || !this.isConnected) {
-      console.error('SignalR bağlantısı yok, cihaz grubuna katılınamıyor');
+     
       return false;
     }
 
     try {
       await this.connection.invoke('JoinDeviceGroup', deviceId);
-      console.log(`Cihaz grubuna katılındı: ${deviceId}`);
+      console.log(`Successfully joined device group: ${deviceId}`);
       return true;
     } catch (error) {
-      console.error(`Cihaz grubuna katılırken hata: ${deviceId}`, error);
+      console.error(`Failed to join device group: ${deviceId}`, error);
       return false;
     }
   }
@@ -112,10 +109,10 @@ class SignalRService {
 
     try {
       await this.connection.invoke('LeaveDeviceGroup', deviceId);
-      console.log(`Cihaz grubundan ayrıldı: ${deviceId}`);
+      console.log(`Successfully left device group: ${deviceId}`);
       return true;
     } catch (error) {
-      console.error(`Cihaz grubundan ayrılırken hata: ${deviceId}`, error);
+      console.error(`Failed to leave device group: ${deviceId}`, error);
       return false;
     }
   }

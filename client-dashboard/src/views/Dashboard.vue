@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <!-- Yükleme ve Hata Durumları -->
+
     <div v-if="loading" class="loading">
       <div class="spinner"></div>
       <span>Veriler yükleniyor...</span>
@@ -11,7 +11,7 @@
     </div>
     
     <div v-else>
-      <!-- SignalR Bağlantı Durumu -->
+    
       <div class="connection-bar">
         <div class="signalr-status" :class="{ connected: signalRConnected }">
           <span v-if="signalRConnected">🟢 Canlı Veri Bağlantısı Aktif - SignalR İle Canlı Veri Dinleniyor</span>
@@ -20,7 +20,6 @@
         
       </div>
       
-      <!-- Anlık Veri Gösterimi -->
       <div v-if="latestLiveData" class="live-data-card">
         <h3>CANLI VERİ</h3>
         <div class="live-data-indicator"></div>
@@ -55,7 +54,7 @@
         </div>
       </div>
       
-      <!-- Geçmiş Veriler Tablosu -->
+
       <div class="sensor-data-table">
         <div class="device-info">
           <h2>{{ deviceId }} Cihazı Geçmiş Veriler</h2>
@@ -139,7 +138,7 @@ export default {
   },
   
   methods: {
-    // Manuel yenileme butonu için (acil durumlarda kullanılabilir)
+    
     async manualRefresh() {
       await this.fetchInitialData();
     },
@@ -171,35 +170,30 @@ export default {
       signalRService.setCallbacks({
        
         onReceiveSensorData: (data) => {
-          // Eğer bu Dashboard'ın gösterdiği cihaz ise veriyi işle
+      
           if (data.deviceId === this.deviceId) {
             this.handleNewSensorData(data);
           }
         },
         
-        // Özel olarak bu cihaz için gelen veriler
         onReceiveDeviceSensorData: (data) => {
           this.handleNewSensorData(data);
         },
         
-        // Bağlantı durumu değiştiğinde
         onConnectionChange: (isConnected) => {
           this.signalRConnected = isConnected;
         }
       });
       
-      // SignalR bağlantısını başlat
       const connected = await signalRService.startConnection();
       this.signalRConnected = connected;
       
       if (connected) {
-        // Cihaz grubuna katıl
         await signalRService.joinDeviceGroup(this.deviceId);
       }
     },
   
     async cleanupSignalR() {
-      // Cihaz grubundan ayrıl
       if (this.deviceId) {
         await signalRService.leaveDeviceGroup(this.deviceId);
       }
@@ -208,16 +202,12 @@ export default {
     handleNewSensorData(data) {
       console.log('Yeni sensör verisi alındı:', data);
       console.log('Mevcut sensorData uzunluğu:', this.sensorData.length);
-      console.log('Limit:', this.limit);
+
       
-      // Canlı veriyi hemen güncelle
       this.latestLiveData = { ...data };
       
-      // Aynı ID'li veri zaten varsa tekrar ekleme
       const existingIndex = this.sensorData.findIndex(item => item.id === data.id);
       if (existingIndex !== -1) {
-        console.log('Mevcut veri güncelleniyor, index:', existingIndex);
-        // Varolan veriyi güncelle (reactive olması için array'i yeniden oluştur)
         this.sensorData = [
           ...this.sensorData.slice(0, existingIndex),
           data,
@@ -225,15 +215,12 @@ export default {
         ];
       } else {
         console.log('Yeni veri ekleniyor');
-        // Veri tablosunu güncelle (veriyi dizinin başına ekle ve limit'e göre kes)
         this.sensorData = [data, ...this.sensorData].slice(0, this.limit);
       }
       
-      
-      // Yeni veriyi işaretle (animasyon için)
+
       this.newDataIds.add(data.id);
       
-      // 3 saniye sonra işareti kaldır
       setTimeout(() => {
         this.newDataIds.delete(data.id);
       }, 3000);

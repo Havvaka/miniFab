@@ -20,28 +20,27 @@ namespace minifab.api.Controllers
 
 
         [HttpGet("device/{deviceId}/latest")]
-        public async Task<ActionResult<object>> GetLatestSensorDataByDevice(string deviceId,  int limit )
+        public async Task<ActionResult<object>> GetLatestSensorDataByDevice(string deviceId, int limit)
         {
             try
             {
                 var sensorData = await _sensorDataService.GetSensorDataByDeviceId(deviceId, limit);
 
                 if (sensorData.Count == 0)
-                    return NotFound(new { success = false, message = $"Cihaza ait veri bulunamadı: {deviceId}" });
+                    return NotFound(new { success = false, message = $"Device not found or no data: {deviceId}" });
 
                 return Ok(new
                 {
                     success = true,
                     data = sensorData,
                     count = sensorData.Count,
-                    deviceId = deviceId,
-                    limit = limit
+                    
+                    deviceId = deviceId
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                return StatusCode(500, new { success = false, message = "Sunucu hatası oluştu" });
+                return StatusCode(500, new { success = false, message = "Server Error" });
             }
         }
         [HttpGet]
@@ -57,25 +56,11 @@ namespace minifab.api.Controllers
                     count = sensorData.Count
                 });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error: {ex.Message}");
-                return StatusCode(500, new { success = false, message = "Sunucu hatası oluştu" });
+                return StatusCode(500, new { success = false, message = "Server Error" });
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult<SensorDataModel>> AddSensorData(SensorDataModel sensorData)
-        {
-            try
-            {
-                var newSensorData = await _sensorDataService.AddSensorData(sensorData);
-                return CreatedAtAction(nameof(GetLatestSensorDataByDevice), new { deviceId = newSensorData.DeviceId }, newSensorData);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
     }
 }

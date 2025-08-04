@@ -48,10 +48,10 @@ namespace minifab.api.Templates.Service.SensorData
 
             if (sensorData.Temperature < -40 || sensorData.Temperature > 85)
             {
-                throw new ArgumentException("Geçersiz sıcaklık değeri");
+                throw new ArgumentException("Invalid temperature value");
             }
 
-            // Cihazın var olup olmadığını kontrol et, yoksa oluştur
+
             var device = await _dbContext.DeviceModel
                 .AnyAsync(d => d.DeviceId == sensorData.DeviceId);
 
@@ -67,7 +67,6 @@ namespace minifab.api.Templates.Service.SensorData
             await _dbContext.SensorDataModel.AddAsync(sensorData);
             await _dbContext.SaveChangesAsync();
             await _hubContext.Clients.All.SendAsync("ReceiveSensorData", sensorData);
-
             await _hubContext.Clients.Group(sensorData.DeviceId)
                        .SendAsync("ReceiveDeviceSensorData", sensorData);
 
@@ -76,7 +75,7 @@ namespace minifab.api.Templates.Service.SensorData
 
         public async Task<bool> ValidateSensorData(SensorDataModel sensorData)
         {
-            // Sadece sıcaklık kontrolü yap, cihaz kontrolünü kaldır
+
             if (sensorData.Temperature < -40 || sensorData.Temperature > 85)
             {
                 return false;

@@ -9,5 +9,6 @@ namespace minifab.api.Templates.Data
 
         public DbSet<DeviceModel> DeviceModel { get; set; }
         public DbSet<SensorDataModel> SensorDataModel { get; set; }
+
     }
 }

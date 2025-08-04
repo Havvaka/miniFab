@@ -7,7 +7,7 @@ namespace minifab.api.Templates.Models
         public int Id { get; set; }
 
         [Required]  
-        public string DeviceId { get; set; } = null!;  // "null!" ile C# null uyarısını önleriz
+        public string DeviceId { get; set; } = null!;  
 
         [Required]
         public string DeviceName { get; set; } = null!;

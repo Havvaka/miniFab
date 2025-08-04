@@ -5,7 +5,7 @@ using System.Text.Json;
 class Program
 {
     private const string QueueName = "sensor_data_queue";
-    private const int MessageIntervalMs = 5000; // 5 seconds between messages
+    private const int MessageIntervalMs = 5000; 
 
     static void Main()
     {
@@ -67,8 +67,8 @@ class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Hata: {ex.Message}");
-                Console.WriteLine("⏳ 5 saniye sonra tekrar denenecek...");
+                Console.WriteLine($" Hata: {ex.Message}");
+                Console.WriteLine(" 5 saniye sonra tekrar denenecek...");
                 Thread.Sleep(5000);
             }
         }

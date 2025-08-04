@@ -191,10 +191,9 @@ public class SensorDataModel
 ```csharp
 public class DeviceModel
 {
+    public int Id { get; set; }
     public string DeviceId { get; set; }
     public string DeviceName { get; set; }
-    public DateTime LastSeen { get; set; }
-    public bool IsActive { get; set; }
 }
 ```
 
@@ -351,9 +350,9 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosy
 
 ## 📞 İletişim
 
-- **Proje Sahibi**: [Your Name]
-- **Email**: [your-email@example.com]
-- **GitHub**: [https://github.com/yourusername]
+- **Proje Sahibi**: [Havva Akkaya]
+- **Email**: [akkayahavva@outlook.com]
+- **GitHub**: [https://github.com/Havvaka]
 
 ## 🙏 Teşekkürler
 
