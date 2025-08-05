@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using minifab.api.Templates.Data;
-using minifab.api.Templates.Models;
-using minifab.api.Templates.Hubs;
+using MiniFab.Api.Data;
+using MiniFab.Api.Models;
+using MiniFab.Api.Hubs;
 using Microsoft.AspNetCore.SignalR;
 
-namespace minifab.api.Templates.Service.SensorData
+namespace MiniFab.Api.Services.SensorData
 {
 
     public interface ISensorDataService
@@ -15,7 +15,7 @@ namespace minifab.api.Templates.Service.SensorData
         Task<List<SensorDataModel>> GetAllSensorData();
         Task<List<SensorDataModel>> GetSensorDataByDeviceId(string deviceId, int count);
         Task<SensorDataModel> AddSensorData(SensorDataModel sensorData);
-        Task<bool> ValidateSensorData(SensorDataModel sensorData);
+        
     }
 
     public class SensorDataService : ISensorDataService
@@ -48,7 +48,7 @@ namespace minifab.api.Templates.Service.SensorData
 
             if (sensorData.Temperature < -40 || sensorData.Temperature > 85)
             {
-                throw new ArgumentException("Invalid temperature value");
+                throw new ArgumentException("geçersiz sensor verisi");
             }
 
 
@@ -71,17 +71,6 @@ namespace minifab.api.Templates.Service.SensorData
                        .SendAsync("ReceiveDeviceSensorData", sensorData);
 
             return sensorData;
-        }
-
-        public async Task<bool> ValidateSensorData(SensorDataModel sensorData)
-        {
-
-            if (sensorData.Temperature < -40 || sensorData.Temperature > 85)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using minifab.api.Templates.Service.SensorData;
-using minifab.api.Templates.Models;
+using MiniFab.Api.Services.SensorData;
+using MiniFab.Api.Models;
 
-namespace minifab.api.Controllers
+namespace MiniFab.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

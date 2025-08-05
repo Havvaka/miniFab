@@ -14,8 +14,8 @@
     
       <div class="connection-bar">
         <div class="signalr-status" :class="{ connected: signalRConnected }">
-          <span v-if="signalRConnected">🟢 Canlı Veri Bağlantısı Aktif - SignalR İle Canlı Veri Dinleniyor</span>
-          <span v-else>🔴 Canlı Veri Bağlantısı Beklemede</span>
+          <span v-if="signalRConnected">Canlı Veri Bağlantısı Aktif - SignalR İle Canlı Veri Dinleniyor</span>
+          <span v-else>Canlı Veri Bağlantısı Beklemede</span>
         </div>
         
       </div>
@@ -168,7 +168,6 @@ export default {
     async setupSignalR() {
       
       signalRService.setCallbacks({
-       
         onReceiveSensorData: (data) => {
       
           if (data.deviceId === this.deviceId) {
@@ -200,10 +199,7 @@ export default {
     },
     
     handleNewSensorData(data) {
-      console.log('Yeni sensör verisi alındı:', data);
-      console.log('Mevcut sensorData uzunluğu:', this.sensorData.length);
 
-      
       this.latestLiveData = { ...data };
       
       const existingIndex = this.sensorData.findIndex(item => item.id === data.id);
@@ -214,7 +210,6 @@ export default {
           ...this.sensorData.slice(existingIndex + 1)
         ];
       } else {
-        console.log('Yeni veri ekleniyor');
         this.sensorData = [data, ...this.sensorData].slice(0, this.limit);
       }
       

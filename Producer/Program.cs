@@ -2,7 +2,9 @@
 using System.Text;
 using System.Text.Json;
 
-class Program
+namespace MiniFab.Producer
+{
+    class Program
 {
     private const string QueueName = "sensor_data_queue";
     private const int MessageIntervalMs = 5000; 
@@ -22,7 +24,7 @@ class Program
                     RequestedConnectionTimeout = TimeSpan.FromSeconds(3)
                 };
 
-                Console.WriteLine("⏳ RabbitMQ bağlantısı kuruluyor...");
+                Console.WriteLine(" RabbitMQ bağlantısı kuruluyor");
 
                 using var connection = factory.CreateConnection();
                 using var channel = connection.CreateModel();
@@ -35,7 +37,7 @@ class Program
                     arguments: null
                 );
 
-                Console.WriteLine("✅ RabbitMQ bağlantısı başarılı!");
+                Console.WriteLine("RabbitMQ bağlantısı başarılı!");
 
                 var random = new Random();
 
@@ -60,8 +62,8 @@ class Program
                         body: body
                     );
 
-                    Console.WriteLine($"📤 Gönderilen veri: {json}");
-                    Console.WriteLine($"⏱️ {MessageIntervalMs/1000} saniye bekleniyor...");
+                    Console.WriteLine($" Gönderilen veri: {json}");
+                    Console.WriteLine($" {MessageIntervalMs/1000} saniye bekleniyor...");
                     Thread.Sleep(MessageIntervalMs);
                 }
             }
@@ -73,4 +75,5 @@ class Program
             }
         }
     }
+}
 }

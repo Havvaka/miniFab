@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using minifab.api.Templates.Models;
+using MiniFab.Api.Models;
 
-namespace minifab.api.Templates.Data
+namespace MiniFab.Api.Data
 {
     public class ApiDbContext : DbContext
     {

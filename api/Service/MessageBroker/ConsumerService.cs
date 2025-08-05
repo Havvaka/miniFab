@@ -3,10 +3,10 @@ using System.Text;
 using System.Text.Json;
 using RabbitMQ.Client.Events;
 using Microsoft.Extensions.DependencyInjection;
-using minifab.api.Templates.Service.SensorData;
-using minifab.api.Templates.Models;
+using MiniFab.Api.Services.SensorData;
+using MiniFab.Api.Models;
 
-namespace minifab.api.Templates.Service.MessageBroker
+namespace MiniFab.Api.Services.MessageBroker
 {
     public interface IConsumerService
     {
@@ -35,7 +35,7 @@ namespace minifab.api.Templates.Service.MessageBroker
 
             try
             {
-                Console.WriteLine("⏳ RabbitMQ bağlantısı kuruluyor...");
+                Console.WriteLine("RabbitMQ bağlantısı kuruluyor...");
                 _connection = factory.CreateConnection();
                 _channel = _connection.CreateModel();
 
@@ -46,11 +46,11 @@ namespace minifab.api.Templates.Service.MessageBroker
                     autoDelete: false,
                     arguments: null
                 );
-                Console.WriteLine("✅ RabbitMQ bağlantısı başarılı!");
+                Console.WriteLine("RabbitMQ bağlantısı başarılı!");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ RabbitMQ bağlantı hatası: {ex.Message}");
+                Console.WriteLine($"RabbitMQ bağlantı hatası: {ex.Message}");
                 throw;
             }
         }
@@ -61,7 +61,6 @@ namespace minifab.api.Templates.Service.MessageBroker
 
             consumer.Received += async (model, ea) =>
             {
-                // Her mesaj için yeni bir scope oluştur
                 using var scope = _serviceProvider.CreateScope();
                 var sensorDataService = scope.ServiceProvider.GetRequiredService<ISensorDataService>();
 
@@ -70,7 +69,7 @@ namespace minifab.api.Templates.Service.MessageBroker
 
                 try
                 {
-                    Console.WriteLine($"📥 Alınan mesaj: {json}");
+
 
                     var sensorData = JsonSerializer.Deserialize<SensorDataModel>(json);
                     if (sensorData != null)
@@ -78,22 +77,16 @@ namespace minifab.api.Templates.Service.MessageBroker
                         try
                         {
                             await sensorDataService.AddSensorData(sensorData);
-                            Console.WriteLine($"Veri başarıyla kaydedildi: Sıcaklık={sensorData.Temperature}°C, " +
-                                            $"Nem=%{sensorData.Humidity}, Voltaj={sensorData.Voltage}V");
                         }
                         catch (ArgumentException)
                         {
-                            Console.WriteLine($" Geçersiz sensör verisi: {json}");
+                            Console.WriteLine($"Geçersiz sensör verisi: {json}");
                         }
                     }
                 }
-                catch (JsonException jex)
-                {
-                    Console.WriteLine($"❌ JSON ayrıştırma hatası: {jex.Message}");
-                }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"❌ Beklenmeyen hata: {ex.Message}");
+                    Console.WriteLine($"error: {ex.Message}");
                 }
             };
 
@@ -103,7 +96,6 @@ namespace minifab.api.Templates.Service.MessageBroker
                 consumer: consumer
             );
 
-            Console.WriteLine($"📡 '{QueueName}' kuyruğu dinleniyor...");
         }
 
         public void Dispose()

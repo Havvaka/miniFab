@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using minifab.api.Templates.Service.Device;
-using minifab.api.Templates.Models;
+using MiniFab.Api.Services.Device;
+using MiniFab.Api.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace minifab.api.Controllers
+namespace MiniFab.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

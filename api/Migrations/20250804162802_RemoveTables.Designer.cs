@@ -12,8 +12,8 @@ using MiniFab.Api.Data;
 namespace MiniFab.Api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20250801173013_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250804162802_RemoveTables")]
+    partial class RemoveTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace MiniFab.Api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DeviceModel", b =>
+            modelBuilder.Entity("MiniFab.Api.Models.DeviceModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,10 +43,10 @@ namespace MiniFab.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeviceModel");
+                    b.ToTable("Device");
                 });
 
-            modelBuilder.Entity("SensorDataModel", b =>
+            modelBuilder.Entity("MiniFab.Api.Models.SensorDataModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,7 +72,7 @@ namespace MiniFab.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SensorDataModel");
+                    b.ToTable("SensorData");
                 });
 #pragma warning restore 612, 618
         }

@@ -4450,11 +4450,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\Havva\\Desktop\\miniFab-project\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\api\\api.csproj",
+      "projectPath": "C:\\Users\\Havva\\Desktop\\miniFab-project\\api\\api.csproj",
       "packagesPath": "C:\\Users\\Havva\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\api\\obj\\",
+      "outputPath": "C:\\Users\\Havva\\Desktop\\miniFab-project\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Havva\\AppData\\Roaming\\NuGet\\NuGet.Config",

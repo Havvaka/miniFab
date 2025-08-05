@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\producer\\Producer.csproj": {}
+    "C:\\Users\\Havva\\Desktop\\miniFab-project\\Producer\\Producer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\producer\\Producer.csproj": {
+    "C:\\Users\\Havva\\Desktop\\miniFab-project\\Producer\\Producer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\producer\\Producer.csproj",
+        "projectUniqueName": "C:\\Users\\Havva\\Desktop\\miniFab-project\\Producer\\Producer.csproj",
         "projectName": "Producer",
-        "projectPath": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\producer\\Producer.csproj",
+        "projectPath": "C:\\Users\\Havva\\Desktop\\miniFab-project\\Producer\\Producer.csproj",
         "packagesPath": "C:\\Users\\Havva\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\producer\\obj\\",
+        "outputPath": "C:\\Users\\Havva\\Desktop\\miniFab-project\\Producer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Havva\\AppData\\Roaming\\NuGet\\NuGet.Config",

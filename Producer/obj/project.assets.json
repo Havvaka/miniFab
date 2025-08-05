@@ -119,11 +119,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\Producer\\Producer.csproj",
+      "projectUniqueName": "C:\\Users\\Havva\\Desktop\\miniFab-project\\Producer\\Producer.csproj",
       "projectName": "Producer",
-      "projectPath": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\Producer\\Producer.csproj",
+      "projectPath": "C:\\Users\\Havva\\Desktop\\miniFab-project\\Producer\\Producer.csproj",
       "packagesPath": "C:\\Users\\Havva\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Havva\\Desktop\\miniFab-signalR\\Producer\\obj\\",
+      "outputPath": "C:\\Users\\Havva\\Desktop\\miniFab-project\\Producer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Havva\\AppData\\Roaming\\NuGet\\NuGet.Config",

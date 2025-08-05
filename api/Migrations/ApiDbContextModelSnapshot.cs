@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using minifab.api.Templates.Data;
+using MiniFab.Api.Data;
 
 #nullable disable
 
-namespace api.Migrations
+namespace MiniFab.Api.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
     partial class ApiDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,7 @@ namespace api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("DeviceModel", b =>
+            modelBuilder.Entity("MiniFab.Api.Models.DeviceModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,10 +40,10 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeviceModel");
+                    b.ToTable("Device");
                 });
 
-            modelBuilder.Entity("SensorDataModel", b =>
+            modelBuilder.Entity("MiniFab.Api.Models.SensorDataModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,7 +69,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SensorDataModel");
+                    b.ToTable("SensorData");
                 });
 #pragma warning restore 612, 618
         }

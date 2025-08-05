@@ -13,7 +13,7 @@ const processResponse = (response) => {
   if (response.data && response.data.success) {
     return response.data;
   } else {
-    throw new Error(response.data?.message || 'API hatası oluştu');
+    throw new Error(response.data?.message || 'API hatası ');
   }
 };
 export default {

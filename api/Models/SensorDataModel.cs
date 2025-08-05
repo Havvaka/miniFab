@@ -1,8 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace minifab.api.Templates.Models
+namespace MiniFab.Api.Models
 {
+    [Table("SensorData")]
     public class SensorDataModel
     {
         public int Id { get; set; }

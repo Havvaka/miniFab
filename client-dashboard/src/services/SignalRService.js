@@ -58,7 +58,6 @@ class SignalRService {
 
       
       await this.connection.start();
-     
       this.isConnected = true;
       this.callbacks.onConnectionChange(true);
       return true;
@@ -76,8 +75,8 @@ class SignalRService {
         await this.connection.stop();
  
       } catch (error) {
-        // Bağlantı kapatma işlemi sırasında oluşabilecek hatalar görmezden gelinir
-        console.warn('Connection stop error:', error);
+       
+        console.log('bağlantı durdurma hatası:', error);
       } finally {
         this.connection = null;
         this.isConnected = false;
@@ -87,10 +86,6 @@ class SignalRService {
   }
 
   async joinDeviceGroup(deviceId) {
-    if (!this.connection || !this.isConnected) {
-     
-      return false;
-    }
 
     try {
       await this.connection.invoke('JoinDeviceGroup', deviceId);
@@ -103,16 +98,12 @@ class SignalRService {
   }
 
   async leaveDeviceGroup(deviceId) {
-    if (!this.connection || !this.isConnected) {
-      return false;
-    }
 
     try {
       await this.connection.invoke('LeaveDeviceGroup', deviceId);
-      console.log(`Successfully left device group: ${deviceId}`);
       return true;
     } catch (error) {
-      console.error(`Failed to leave device group: ${deviceId}`, error);
+      console.log("device gruptan ayrılamadı");
       return false;
     }
   }

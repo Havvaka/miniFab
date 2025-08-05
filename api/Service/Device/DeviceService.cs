@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using minifab.api.Templates.Data;
-using minifab.api.Templates.Models;
+using MiniFab.Api.Data;
+using MiniFab.Api.Models;
 
-namespace minifab.api.Templates.Service.Device
+namespace MiniFab.Api.Services.Device
 {
     public interface IDeviceService
     {
