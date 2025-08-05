@@ -9,7 +9,7 @@ class SignalRService {
       onConnectionChange: () => {}
     };
     this.isConnected = false;
-    this.hubUrl = 'http://localhost:5297/sensorHub';
+    this.hubUrl = process.env.VUE_APP_HUB_URL || '/sensorHub';
   }
 
   setCallbacks(callbacks) {

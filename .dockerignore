@@ -1,0 +1,16 @@
+# Root .dockerignore
+**/bin
+**/obj
+**/node_modules
+**/dist
+**/.git
+**/.gitignore
+**/.dockerignore
+**/Dockerfile*
+**/docker-compose*
+**/.env
+**/.vscode
+**/.vs
+**/README.md
+**/*.md
+**/.editorconfig

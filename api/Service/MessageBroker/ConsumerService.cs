@@ -26,7 +26,7 @@ namespace MiniFab.Api.Services.MessageBroker
 
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
+                HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "rabbitmq",
                 Port = 5672,
                 UserName = "guest",
                 Password = "guest",

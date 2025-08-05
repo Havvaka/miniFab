@@ -29,7 +29,7 @@ builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", 
-        builder => builder.WithOrigins("http://localhost:8080", "http://localhost:3000") 
+        builder => builder.WithOrigins("http://localhost:8080", "http://localhost:3000", "http://localhost") 
                           .AllowAnyMethod()
                           .AllowAnyHeader()
                           .AllowCredentials());
@@ -39,20 +39,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Docker içinde HTTP kullanıyoruz
 
 app.UseCors("AllowAll");
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapHub<SensorHub>("/sensorHub"); 
-});
 
 app.MapControllers();
+app.MapHub<SensorHub>("/sensorHub");
 
 var consumerService = app.Services.GetRequiredService<IConsumerService>();
 consumerService.StartListening();

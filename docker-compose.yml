@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: minifab_postgres
+    environment:
+      POSTGRES_DB: MiniFabDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Buzdandus9.
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - minifab_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # RabbitMQ Message Broker
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: minifab_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"    # AMQP port
+      - "15672:15672"  # Management UI port
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - minifab_network
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  # API Backend
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: minifab_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=MiniFabDB;Username=postgres;Password=Buzdandus9.
+    ports:
+      - "5000:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - minifab_network
+    restart: unless-stopped
+
+  # Producer Service
+  producer:
+    build:
+      context: .
+      dockerfile: Producer/Dockerfile
+    container_name: minifab_producer
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - minifab_network
+    restart: unless-stopped
+
+  # Frontend Dashboard
+  frontend:
+    build:
+      context: ./client-dashboard
+      dockerfile: Dockerfile
+    container_name: minifab_frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - minifab_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+
+networks:
+  minifab_network:
+    driver: bridge
