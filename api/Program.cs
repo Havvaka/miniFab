@@ -39,7 +39,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// app.UseHttpsRedirection(); // Docker içinde HTTP kullanıyoruz
+
 
 app.UseCors("AllowAll");
 app.UseRouting();
