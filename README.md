@@ -16,6 +16,13 @@ IoT sensörlerinden gelen verileri gerçek zamanlı olarak izlemek için gelişt
 - **Message Broker**: RabbitMQ
 - **Container**: Docker
 
+
+## 📋 Gereksinimler
+
+- **Docker Desktop** (Windows)
+- **Docker Compose** v2.0+
+- En az **4GB RAM** (tüm servisler için)
+
 ## 🚀 Projeyi Çalıştırma
 
 ### 1. Repository'yi Klonlayın
@@ -47,10 +54,34 @@ docker compose ps
 docker compose down
 ```
 
-## � Sistem Akışı
+## 🔄 Sistem Akışı
 
 1. **Producer** → Rastgele sensor verisi üretir
 2. **RabbitMQ** → Verileri kuyrukta tutar
 3. **API** → Verileri alır ve PostgreSQL'e kaydeder
 4. **SignalR** → Frontend'e gerçek zamanlı bildirim gönderir
 5. **Dashboard** → Verileri görselleştirir
+
+## 📁 Proje Yapısı
+
+- `api/` - ASP.NET Core Web API (SignalR Hub dahil)
+- `client-dashboard/` - Vue.js frontend uygulaması
+- `Producer/` - Sensor verisi üreten C# konsol uygulaması
+- `docker-compose.yml` - Tüm servislerin container tanımları
+
+## 🔧 Sorun Giderme
+
+**Portlar kullanımda hatası:**
+```bash
+# Çakışan servisleri durdurun
+docker compose down
+```
+
+**Veritabanı bağlantı hatası:**
+```bash
+# Containerları yeniden başlatın
+docker compose restart
+```
+
+
+
